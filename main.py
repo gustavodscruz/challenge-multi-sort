@@ -59,54 +59,42 @@ import sys
 sys.setrecursionlimit(200000)  
 
 def insertion_sort(lista):
-    n = len(lista)
-    for i in range(1, n):
-        chave = lista[i]
-        j = i - 1
-        while j >= 0 and lista[j] > chave:
+    for i in range(1, len(lista)):
+        pivo = lista[i]
+        j = i-1
+        while j>=0 and pivo<lista[j]:
             lista[j+1] = lista[j]
-            j = j - 1
-        lista[j+1] = chave
+            j-=1
+        lista[j+1] = pivo
 # Complexidade de tempo O(nˆ2)
 # Complexidade de espaço O(n)
 
 # Vídeo "Bubble Sort": https://youtu.be/GiNPe_678Ms
+def troca(lista, i, j):
+    lista[i], lista[j] = lista[j], lista[i]
+
+def empurra(lista):
+    for i in range(len(lista) - 1):
+        if lista[i] > lista[i+1]:
+            troca(lista, i, i+1)
+
 def bubble_sort(lista):
-    n = len(lista)
-    for j in range(n-1):
-        for i in range(n-1):
-            if lista[i] > lista[i+1]:
-                # troca de elementos nas posições i e i+1
-                lista[i], lista[i+1] = lista[i+1], lista[i]
+    t = len(lista)
+    while t > 1:
+        empurra(lista)
+        t -= 1
 # Complexidade de tempo O(nˆ2)
 # Complexidade de espaço O(n)
 
-# Vídeo "Selection Sort": https://youtu.be/ZT_dT8yn48s
 def selection_sort(lista):
-    n = len(lista)
-    for j in range(n-1):
-        min_index = j
-        for i in range(j, n):
-            if lista[i] < lista[min_index]:
-                min_index = i
-        if lista[j] > lista[min_index]:
-            aux = lista[j]
-            lista[j] = lista[min_index]
-            lista[min_index] = aux
+    for i in range(len(lista)):
+        min_index = i
+        for j in range(i+1, len(lista)):
+            if lista[j] < lista[min_index]:
+                min_index = j
+        #realiza a troca (atribuição paralelo)
+        lista[i], lista[min_index] = lista[min_index], lista[i]
 
-# def selection_sort(arr, start=0):
-
-#     if start >= len(arr) - 1:
-#         return
-
-#     min_index = start
-#     for i in range(start + 1, len(arr)):
-#         if arr[i] < arr[min_index]:
-#             min_index = i
-
-#     arr[start], arr[min_index] = arr[min_index], arr[start]
-
-#     recursive_selection_sort(arr, start + 1)
 
 
 def merge_sort(lista):
@@ -197,22 +185,22 @@ def get_time():
     inicio = time.time()
     merge_sort(numbers_list1)
     fim = time.time()
-    tempo_gasto.append(inicio - fim)
+    tempo_gasto.append(fim - inicio)
 
     inicio = time.time()
     bubble_sort(numbers_list2)
     fim = time.time()
-    tempo_gasto.append(inicio - fim)
+    tempo_gasto.append(fim - inicio)
 
     inicio = time.time()
     selection_sort(numbers_list3)
     fim = time.time()
-    tempo_gasto.append(inicio - fim)
+    tempo_gasto.append(fim - inicio)
 
     inicio = time.time()
     insertion_sort(numbers_list4)
     fim = time.time()
-    tempo_gasto.append(inicio - fim)
+    tempo_gasto.append(fim - inicio)
 
     return tempo_gasto
     
